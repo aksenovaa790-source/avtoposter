@@ -1,0 +1,29 @@
+name: Правка поста ТГ
+
+on:
+  workflow_dispatch:
+    inputs:
+      message_id:
+        description: "Номер сообщения в канале (из ссылки t.me/канал/НОМЕР)"
+        required: true
+      file:
+        description: "Файл с новым текстом, например content/edit_0929.txt"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+      TG_CHANNEL: ${{ vars.TG_CHANNEL || secrets.TG_CHANNEL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q requests
+      - run: python publisher/tg_edit.py "${{ github.event.inputs.message_id }}" "${{ github.event.inputs.file }}"
