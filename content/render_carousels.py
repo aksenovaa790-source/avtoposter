@@ -54,6 +54,12 @@ html,body{width:1080px;height:1350px;overflow:hidden;background:#1d1a17}
 .h{font-family:Oswald;font-weight:700;text-transform:uppercase;line-height:.98;letter-spacing:.005em}
 .serif{font:italic 400 40px 'PT Serif';opacity:.9;margin-top:22px}
 .cover .box{position:absolute;left:60px;right:60px;bottom:96px;text-align:center}
+.cover.tg .box{bottom:250px}
+.cover.tg .shade{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 18%,rgba(0,0,0,.4) 42%,rgba(0,0,0,.85) 64%,rgba(0,0,0,.97) 100%)}
+.tgcta{position:absolute;left:0;right:0;bottom:70px;text-align:center}
+.tgcta b{display:inline-block;padding:20px 50px;background:#C9A77C;color:#1d1a17;border-radius:80px;font:700 44px Oswald;letter-spacing:.08em;text-transform:uppercase}
+.tgcta span{display:block;margin-top:14px;font:500 26px Montserrat;opacity:.75;letter-spacing:.04em}
+.swipe.top{top:56px;bottom:auto;right:72px;opacity:.6}
 .cover .h{font-size:104px}
 .swipe{position:absolute;bottom:52px;right:72px;font:500 24px Montserrat;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
 .inner{background:#000}
@@ -92,11 +98,17 @@ def slide_html(c, k, total, photo_cover, photo_ava):
     label, head, text = c["slides"][k]
     handle = '<div class="handle">@toymurzina_buh</div>'
     if k == 0:
-        swipe = "" if total == 1 else '<div class="swipe">листайте →</div>'
-        return f"""<div class="s cover"><div class="photo" style="background-position:center {c['pos']};background-image:url(data:image/jpeg;base64,{photo_cover})"></div>
+        # Инстаграм-карусель: на обложке боль + призыв перейти в ТГ (правило Любови 04.10)
+        tg = total > 1 and c.get("cover_cta", True)
+        swipe = "" if total == 1 else f'<div class="swipe{" top" if tg else ""}">листайте →</div>'
+        cta = ""
+        if tg:
+            cta_t = c.get("cover_cta") if isinstance(c.get("cover_cta"), str) else "Подробнее — в Телеграм"
+            cta = f'<div class="tgcta"><b>{esc(cta_t)} →</b><span>ссылка на канал в шапке профиля</span></div>'
+        return f"""<div class="s cover{" tg" if tg else ""}"><div class="photo" style="background-position:center {c['pos']};background-image:url(data:image/jpeg;base64,{photo_cover})"></div>
 <div class="shade"></div>{handle}
 <div class="box"><div class="label">{esc(label)}</div><div class="h" data-fit="320">{esc(head)}</div>
-<div class="serif">{esc(text)}</div></div>{swipe}</div>"""
+<div class="serif">{esc(text)}</div></div>{swipe}{cta}</div>"""
     ava = (f'<div class="ava"><i style="background-image:url(data:image/jpeg;base64,{photo_ava})"></i>'
            f'<div><b>Татьяна Тоймурзина</b><span>налоговый консультант</span></div></div>')
     kicker = f"{label}" if not label.isdigit() else f"{label} / {total-2:02d}"
