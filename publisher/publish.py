@@ -406,8 +406,7 @@ class Instagram:
             return self.publish(self.container(media_type="CAROUSEL", children=",".join(kids), caption=it.text))
         if it.fmt == "reel":
             extra = {"cover_url": self.url_for(imgs[0])} if imgs else {}
-            return self.publish(self.video_container(vids[0], media_type="REELS", caption=it.text,
-                                                     share_to_feed="true", **extra))
+            return self.publish(self.container(video_url=self.url_for(vids[0]), media_type="REELS", caption=it.text, share_to_feed="true", **extra))
         if it.fmt == "story":
             if vids:
                 return self.publish(self.video_container(vids[0], media_type="STORIES"))
