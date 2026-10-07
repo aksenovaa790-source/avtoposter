@@ -51,3 +51,5 @@ test-ig-story;instagram;story;2026-09-28 10:20;2026-09-24 17:57;опублико
 1005-ig-st2;instagram;story;2026-10-05 23:00;2026-10-05 19:39;опубликовано;https://www.instagram.com/stories/toymurzina_buh/4001352268574779088
 1006-tg-sait;telegram;post;2026-10-06 20:30;2026-10-06 20:42;опубликовано;https://t.me/sozdatelsaito/2
 1006-ig-reel;instagram;reel;2026-10-06 20:50;2026-10-06 22:16;опубликовано;https://www.instagram.com/reel/DeKg4mWndGp/
+1007-ig-zachem-sait;instagram;post;2026-10-07 19:00;2026-10-07 21:51;ошибка: Instagram: API access blocked. (код 200);
+1007-tg-zachem-sait;telegram;post;2026-10-07 19:00;2026-10-07 21:51;опубликовано;https://t.me/sozdatelsaito/3
